@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logging>
+
+	<!-- 全局日志等级 -->
+	<level>DEBUG</level>
+
+	<!-- 全局日志缓存处理方式 -->
+	<cache enabled="true" lazyMs="100" batchCount="200" />
+
+	<!-- 全局日志过滤器,任何有isMultiple属性为true的同名节点都可以为多个,因此可以有多个过滤器 -->
+	<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" level="DEBUG" />
+
+	<!-- 具体某一个包或类的处理细节 -->
+	<loggers>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.TestLog2" level="debug">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MDCFilter" level="WARN"  />
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.TestLog3" level="debug">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" />
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.TestLog4" level="debug">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MDCFilter" level="WARN"/>
+			<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" level="debug"/>
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.Marker.TestMarkerLog" level="DEBUG">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" level="debug"  />
+		</logger>
+
+		<logger isMultiple="true" key="com.feinno.logging.spi" level="ERROR" />
+
+		<logger isMultiple="true" key="com.feinno.imps.SmsClient" level="ERROR" />
+	</loggers>
+
+	<!-- 输出方式的配置 -->
+	<appenders>
+		<!-- 控制台的输出方式 -->
+		<console enabled="true" />
+
+		<!-- 文本的输出方式 -->
+		<text enabled="true" path="/tmp/test/log" />
+
+		<!-- 数据库的输出方式 -->
+		<database enabled="true">
+			<!-- <url>jdbc:mysql://192.168.94.1:3306/test</url> -->
+			<!-- <driver>com.mysql.jdbc.Driver</driver> -->
+			<!-- <database>test</database> -->
+			<!-- <table>HA_Logging</table> -->
+			<!-- <user>root</user> -->
+			<!-- <password>123456</password> -->
+			<url>jdbc:mysql://10.10.208.122:3306/LogDB</url>
+			<driver>com.mysql.jdbc.Driver</driver>
+			<database>test</database>
+			<table>HA_Logging</table>
+			<user>admin</user>
+			<password>admin</password>
+		</database>
+	</appenders>
+
+</logging>

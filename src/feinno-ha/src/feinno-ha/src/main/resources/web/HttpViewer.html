@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.flot.min.js"></script>
+    <script src="viewer.js"></script>
+    <style> </style>
+
+</head>
+
+
+<body>
+
+<div>
+   <h2>Simple Performance Viewer (test purpose only)</h2>
+</div>
+
+<div>
+<button id="watchToggle">watchAll</button>
+
+    <table id="resTbl" style="border:1 solid red">
+        <thead>
+        <tr>
+            <td>Name</td>
+            <td>invocations</td>
+            <td>processed</td>
+            <td>concurrent</td>
+            <td>exceptions</td>
+            <td>lastErrMsg</td>
+            <td>lastElapsed</td>
+            <td>maxElapsed</td>
+            <td>minElapsed</td>
+            <td>timeConsumed</td>
+            <td>disabled</td>
+            <td colspan="3">Actions</td>
+        </tr>
+        </thead>
+        <tbody id="rowBody">
+        <tr id="dataRow" style="display:none">
+            <td class="Name"></td>
+            <td class="invocations"></td>
+            <td class="processed"></td>
+            <td class="concurrent"></td>
+            <td class="exceptions"></td>
+            <td class="lastErrMsg"></td>
+            <td class="lastElapsed"></td>
+            <td class="maxElapsed"></td>
+            <td class="minElapsed"></td>
+            <td class="timeConsumed"></td>
+            <td class="disabled"></td>
+            <td><button class="watch">watch</button></td>
+            <td><button class="disableAct">disable</button></td>
+            <td><button class="reset">reset</button></td>
+       </tr>
+       </tbody>
+    </table>
+</div>
+<h2>lastErrMsg</h2>
+<div id="ph" style="width:1000px;height:300px"></div>
+</body>
+
+</html>

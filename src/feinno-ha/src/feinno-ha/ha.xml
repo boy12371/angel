@@ -1,0 +1,15 @@
+<ha-package>
+	<worker>
+		<name>service-name</name>
+		<mode>SIMPLE|CONTROLLABLE</mode>
+		<version>4.3.3.1120</version>
+		<servicePorts>rpc=7002;http=8008;monitor=8009;</servicePorts>
+		<serviceComponent>test.com.feinno.ha.center.worker.CenterServiceComponent</serviceComponent>
+	</worker>
+	<metas>
+		<!-- 元数据 - -->
+		<meta isMultiple="true" key="appengine"><![CDATA[
+		
+		]]></meta>
+	</metas>
+</ha-package>

@@ -1,0 +1,10 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/feinno/configuration/spi/HAConfigurator.java=UTF-8
+encoding//src/main/java/com/feinno/ha/deployment/HADeployment.java=UTF-8
+encoding//src/main/java/com/feinno/ha/deployment/HADeploymentOne.java=UTF-8
+encoding//src/main/java/com/feinno/logging/filter/FilterReply.java=UTF-8
+encoding/<project>=UTF-8
+encoding/HADB5_Dev.properties=UTF-8
+encoding/HADB5_SiteC.properties=UTF-8
+encoding/service.properties=UTF-8
+encoding/settings.properties=UTF-8

@@ -1,0 +1,22 @@
+<p align="left">使用配置如下： <br />
+  <u>&lt;plugin&gt;</u> <br />
+     &lt;groupId&gt;<u>feinno</u>&lt;/groupId&gt;<br />
+     &lt;artifactId&gt;<u>feinno</u>-<u>app</u>-engine-builder&lt;/artifactId&gt;<br />
+     &lt;version&gt;最新版本号&lt;/version&gt;<br />
+     &lt;executions&gt;<br />
+        &lt;execution&gt;<br />
+           &lt;id&gt;resourcesPhase&lt;/id&gt;<br>
+               &lt;phase&gt;generate-sources&lt;/phase&gt;<br />
+           &lt;goals&gt;<br />
+              &lt;goal&gt;resources&lt;/goal&gt;<br />
+           &lt;/goals&gt;<br />
+        &lt;/execution&gt;<br />
+        &lt;execution&gt;<br />
+           &lt;id&gt;compilePhase&lt;/id&gt;<br>
+           &lt;phase&gt;compile&lt;/phase&gt;  <br />
+           &lt;goals&gt;<br />
+              &lt;goal&gt;<u>analyse</u>&lt;/goal&gt;<br />
+           &lt;/goals&gt;<br />
+        &lt;/execution&gt;<br />
+     &lt;/executions&gt;<br />
+  &lt;/plugin&gt;</p>

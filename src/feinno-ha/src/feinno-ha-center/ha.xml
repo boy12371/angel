@@ -1,0 +1,16 @@
+<ha-package>
+	<worker>
+		<name>HA_Test</name>
+		<mode>SIMPLE|CONTROLLABLE</mode>
+		<version>4.3.3.1120</version>
+		<servicePorts>rpc_duplex;rpc;monitor</servicePorts>
+		<serviceComponent>test.com.feinno.ha.center.worker.ClientServiceComponent</serviceComponent>
+<!-- 		<serviceComponent>com.feinno.ha.center.CenterServiceComponent</serviceComponent> -->
+	</worker>
+	<metas>
+		<!-- 元数据 - -->
+		<meta isMultiple="true" key="appengine"><![CDATA[
+		
+		]]></meta>
+	</metas>
+</ha-package>

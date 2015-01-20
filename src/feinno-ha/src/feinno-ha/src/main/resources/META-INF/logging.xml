@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logging>
+	<!-- 全局日志等级 -->
+	<level>DEBUG</level>
+
+	<!-- 日志缓存设置 -->
+	<cache enabled="false" cacheName="LogCache" lazyMs="100" batchCount="20" />
+
+	<!-- 全局日志过滤器,任何有isMultiple属性为true的同名节点都可以为多个,因此可以有多个过滤器 -->
+	<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" level="info" />
+
+	<!-- 具体某一个包或类的处理细节 -->
+	<loggers>
+	</loggers>
+
+	<!-- 输出方式的配置 -->
+	<appenders>
+		<!-- 控制台的输出方式 -->
+		<console enabled="true" />
+
+		<!-- 文本的输出方式 -->
+		<text enabled="true" path="/tmp/log" />
+
+		<!-- 数据库的输出方式 -->
+		<database enabled="false"/>
+	</appenders>
+</logging>

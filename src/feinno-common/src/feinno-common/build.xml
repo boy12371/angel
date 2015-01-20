@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="feinno-common" default="jar">
+
+	<property name="delivery-name" value="feinno-common.jar" />
+	<property name="dist.dir" value="dist" />
+	<property name="compile.output.dir" value="classes" />
+	<property name="compiler.debug" value="true" />
+	<property name="compiler.generate.no.warnings" value="true" />
+	<property file="local.properties" />
+
+
+	<path id="compile.classpath">
+		<fileset dir="lib">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+	<path id="sourcepath">
+		<dirset dir="${basedir}">
+			<include name="src/main/java" />
+		</dirset>
+	</path>
+
+	<path id="testSourcepath">
+		<dirset dir="${basedir}">
+			<include name="src/test/java" />
+		</dirset>
+	</path>
+
+
+	<target name="compile" description="compile (without tests)">
+		<mkdir dir="${compile.output.dir}" />
+		<javac destdir="${compile.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" includeantruntime="false" fork="true">
+			<classpath refid="compile.classpath" />
+			<src refid="sourcepath" />
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile" description="build jar (no test classes)">
+		<mkdir dir="${dist.dir}" />
+		<jar destfile="${dist.dir}/${delivery-name}" basedir="${compile.output.dir}" />
+	</target>
+
+
+
+	<target name="clean" description="cleanup module">
+		<delete dir="${compile.output.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+
+</project>

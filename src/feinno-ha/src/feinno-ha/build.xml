@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="feinno-ha" default="dist">
+
+  <property name="delivery-name" value="feinno-ha.jar"/>
+  <property name="delivery-appbean-name" value="feinno-test-appbean.jar"/>
+  <property name="dist.dir" value="dist"/>
+  <property name="dist.lib.dir" value="${dist.dir}/lib"/>
+  <property name="dist.app-bean.dir" value="${dist.dir}/beans/"/>
+	
+  <property name="compile.output.dir" value="classes/"/>
+  <property name="main.output.dir" value="classes/main"/>
+  <property name="test.output.dir" value="classes/test"/>
+  <property name="compiler.debug" value="true"/>
+  <property name="compiler.generate.no.warnings" value="false"/>
+	
+	
+  <property name="feinno-common.dir" value="../feinno-common"/>	
+  <property name="feinno-common.lib" value="${feinno-common.dir}/lib"/>
+  <property name="feinno-common.dist.jar" value="${feinno-common.dir}/dist/feinno-common.jar"/>
+
+  <property file="local.properties"/>
+
+  
+  <path id="compile.classpath">
+    <fileset dir="${feinno-common.lib}">
+        <include name="**/*.jar"/>
+    </fileset>
+    <fileset dir="./lib">
+        <include name="**/*.jar"/>
+    </fileset>
+  	<pathelement location="${feinno-common.dist.jar}"/>
+  </path>
+
+  <path id="test.compile.classpath">
+  	<path refid="compile.classpath"/>
+  	<pathelement path="${main.output.dir}"/>
+  </path>
+	
+  <path id="runtime.classpath">
+  	<path refid="test.compile.classpath"/>
+  	<pathelement path="${test.output.dir}"/>
+  </path>
+
+
+	
+  <path id="main-src">
+    <dirset dir="${basedir}">
+       <include name="src/main/java"/>    	 
+    </dirset>
+  </path>
+
+  <path id="test-src">
+    <dirset dir="${basedir}">
+    	<include name="src/test/java/test/com/feinno/ha/component/**"/>
+    </dirset>
+  </path>
+
+  
+  <target name="compile-main" description="compile">
+    <mkdir dir="${main.output.dir}"/>
+    <javac destdir="${main.output.dir}" 
+    	debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" 
+    	includeantruntime="false" fork="true">
+      <classpath refid="compile.classpath"/>
+      <src refid="main-src" />
+    </javac>
+  </target>
+
+  <target name="compile-test" depends="compile-main" description="compile">
+    <mkdir dir="${test.output.dir}"/>
+    <javac destdir="${test.output.dir}" 
+    	debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" 
+    	includeantruntime="false" fork="true">
+      <classpath refid="test.compile.classpath"/>
+      <src refid="test-src" />
+    </javac>
+  </target>
+
+
+
+  <target name="goMockHost" depends="compile-test" description="startup mock host">
+    <java classname="test.com.feinno.ha.component.MockHost"
+          fork="yes" >
+      <classpath refid="runtime.classpath"/>
+    </java>
+  </target>
+	
+	
+  <target name="goLocal" depends="compile-test" description="startup in LOCAL mode">
+    <java classname="com.feinno.ha.Genesis"
+          fork="yes" >
+      <arg value="-local:src/test/java/test/com/feinno/ha/component/test.properties"/>
+      <classpath refid="runtime.classpath"/>
+    </java>
+  </target>
+	
+  <target name="goHA" depends="compile-test" description="startup in HA mode">
+    <java classname="com.feinno.ha.Genesis"
+          fork="yes" >
+      <arg value="-ha:8890"/>
+    	<arg value="-workername:xxx"/>
+      <classpath refid="runtime.classpath"/>
+    </java>
+  </target>
+	
+  <condition property="serverAddr">
+   <and>
+     <isset property="common-dist.present"/>
+     <isset property="ha-dist.present"/>
+   </and>
+  </condition>	
+	
+  <target name="checkServerAddr" unless="serverAddr">
+	<property name="serverAddr" value="127.0.0.1"/>
+  	<echo>
+  		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+  		WARNING: using default serverAddress
+  		>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ 	</echo>  	
+  </target>
+	
+  <target name="dummyClient" depends="compile-test, checkServerAddr" description="startup dummy component test client">
+    <java classname="test.com.feinno.ha.component.DummyClient"
+          fork="yes" >
+      <arg value="${serverAddr}"/>
+      <classpath refid="runtime.classpath"/>
+    </java>
+  </target>	
+	
+	
+  <target name="jar-main" depends="compile-main" description="build feinno-ha jar">
+    <mkdir dir="${dist.dir}"/>
+  	<jar destfile="${dist.dir}/${delivery-name}"
+  	       basedir="${main.output.dir}">
+  	</jar>
+  </target>	
+
+  <target name="jar-app-beans" depends="compile-test" description="build app bean jar">
+    <mkdir dir="${dist.app-bean.dir}"/>
+  	<jar destfile="${dist.app-bean.dir}/${delivery-appbean-name}"
+  	       basedir="${test.output.dir}">
+  	</jar>
+  </target>	
+
+  <target name="jar-dummy" depends="compile-test" description="build app bean jar">
+    <mkdir dir="${dist.app-bean.dir}"/>
+  	<jar destfile="${dist.app-bean.dir}/dummy-bean.jar"
+  	       basedir="${test.output.dir}">
+  		<include name="**/DummyComponent*.class"/>
+  	</jar>
+  </target>		
+
+
+  <target name="dist" depends="jar-main,jar-app-beans" description="make distribution">
+    <mkdir dir="${dist.lib.dir}"/>
+  	<copy todir="${dist.lib.dir}">
+  	    <fileset dir="${feinno-common.lib}">
+  	        <include name="**/*.jar"/>
+  	    	<exclude name="**/*sources.jar"/> 
+  	    	<exclude name="**/*javadoc.jar"/>
+  	    </fileset>
+    </copy>  	
+    <copy file="${feinno-common.dist.jar}" toDir="${dist.lib.dir}"/>
+  </target>	
+	
+  <target name="clean" description="cleanup module">
+    <delete dir="${compile.output.dir}"/>
+    <delete dir="${test.output.dir}"/>
+  	<delete dir="${dist.dir}"/>
+  	
+  </target>
+	
+  
+</project>

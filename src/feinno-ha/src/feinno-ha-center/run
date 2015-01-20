@@ -1,0 +1,25 @@
+#! /bin/sh
+PSNAME=ha-center
+JAVA='/usr/bin/java'
+cd ./config
+
+classpath='.'
+for jar in ../lib/*.jar
+do
+        classpath=$classpath$jar':'
+done
+
+for jar in ../common/*.jar
+do
+        classpath=$classpath$jar':'
+done
+
+for jar in ../center/*.jar
+do
+        classpath=$classpath$jar':'
+done
+
+#echo $classpath
+
+#java -classpath $classpath com.feinno.ha.service.Runner $psname >/dev/null 2>&1
+$JAVA -classpath $classpath com.feinno.ha.service.Runner $PSNAME

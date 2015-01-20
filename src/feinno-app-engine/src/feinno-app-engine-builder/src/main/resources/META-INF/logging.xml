@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logging>
+
+	<level>ALL</level>
+
+	<cache enabled="false" lazyMs="100" batchCount="200" />
+
+	<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" level="info" />
+
+	<loggers>
+		<logger isMultiple="true" key="com.feinno" level="warn">
+		</logger>
+		<logger isMultiple="true" key="com.feinno.ha" level="debug">
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha" level="debug">
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.TestLog2" level="debug">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MDCFilter" level="WARN" />
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.TestLog3" level="debug">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" />
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.TestLog4" level="debug">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MDCFilter" />
+			<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" />
+		</logger>
+		<logger isMultiple="true" key="test.com.feinno.ha.logging.newtest.Marker.TestMarkerLog" level="error">
+			<filter isMultiple="true" class="com.feinno.logging.filter.MarkerFilter" level="debug" />
+		</logger>
+
+		<logger isMultiple="true" key="com.feinno.logging.spi" level="ERROR" />
+
+		<logger isMultiple="true" key="com.feinno.imps.SmsClient" level="ERROR" />
+	</loggers>
+
+	<appenders>
+		<console enabled="true" />
+
+		<text enabled="false" path="/tmp/test/log" />
+
+		<database enabled="false">
+			<url>jdbc:mysql://192.168.110.234:3306/test</url>
+			<driver>com.mysql.jdbc.Driver</driver>
+			<database>test</database>
+			<table>FAE_LOG</table>
+			<user>admin</user>
+			<password>admin</password>
+		</database>
+	</appenders>
+
+</logging>

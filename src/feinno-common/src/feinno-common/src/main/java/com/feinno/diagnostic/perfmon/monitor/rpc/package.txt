@@ -1,0 +1,75 @@
+* 性能计数器rpc交互协议
+
+**获取Counter列表
+	GetCategoryList
+
+**订阅Counter数据
+	Subscribe
+参数
+	ProtoSubCounter:
+		category-目录名;
+		instance-(sum : all) sum汇总值，all全部;
+		invterval-轮训秒，最小为1秒;
+	ProtoCookie:
+		cookie-id;
+
+**退订Counter数据
+	Unsubscribe
+参数
+	ProtoUnsubCounter:
+		category-目录名;
+	ProtoCookie:
+		cookie-id;
+
+**轮训Counter值
+	Pull
+参数
+	ProtoCookie:
+		cookie-id;
+
+		
+Client Tools
+======================================
+> perfmon (tcp://)192.168.1.100:6000 
+List Category: // 列出所有的Category
+rpc-client(4)
+rpc-server(5)
+
+
+> perfmon (tcp://)192.168.1.100:6000 rpc-client 10
+// 订阅rpc-client, 按照每10秒的方式输出
+
+ INSTANCE USER   PR  NI  VIRT  RES  SHR S %CPU %MEM    TIME+  COMMAND                                                                  
+ 1647 faemysql  20   0 4219m 182m 2876 S 38.7  2.3 892:03.56 mysqld                                                                   
+ 6251 root      20   0 6360m 138m 9.8m S 15.5  1.8 164:33.13 java                                                                     
+ 9550 root      20   0 6375m 244m  11m S 15.5  3.1 162:34.66 java                                                                     
+28783 root      20   0 6418m 217m 8032 S 15.5  2.8 564:51.48 java                                                                     
+ 8049 root      20   0 6367m 160m  10m S 13.6  2.0 141:54.24 java                                                                     
+27831 root      20   0 6380m 226m 9792 S 13.6  2.9 172:40.90 java                                                                     
+12683 root      20   0 6365m 150m 8044 S 11.6  1.9 207:06.89 java                                                                     
+ 1663 root      20   0 6431m 243m 7952 S  9.7  3.1 525:00.74 java                                                                     
+ 7000 root      20   0 6366m 170m  10m S  9.7  2.2 140:28.04 java                                                                     
+27579 root      20   0 6381m 544m 7992 S  7.7  6.9 294:05.18 java                                                                     
+  201 root      15  -5     0    0    0 S  5.8  0.0  35:50.47 kslowd000                                                                
+14203 root      20   0 6361m 668m  12m S  5.8  8.5   1:28.86 java                                                                     
+ 8545 root      20   0 5055m 705m  12m S  3.9  9.0   1:52.34 java                                                                     
+16327 root      20   0 14936 1112  772 R  3.9  0.0   0:00.03 top                                                                      
+    7 root      20   0     0    0    0 S  1.9  0.0  30:07.06 ksoftirqd/1                                                              
+   10 root      20   0     0    0    0 S  1.9  0.0  34:38.06 ksoftirqd/2                                                              
+   13 root      20   0     0    0    0 S  1.9  0.0  14:40.53 ksoftirqd/3                                                              
+    1 root      20   0 19244  980  784 S  0.0  0.0   0:08.88 init                                                                     
+    2 root      20   0     0    0    0 S  0.0  0.0   0:00.00 kthreadd                                                                 
+    3 root      RT   0     0    0    0 S  0.0  0.0   0:00.02 migration/0                                                              
+    4 root      20   0     0    0    0 S  0.0  0.0   0:48.38 ksoftirqd/0                                                              
+    5 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 watchdog/0                                                               
+    6 root      RT   0     0    0    0 S  0.0  0.0   0:00.10 migration/1                                                              
+    8 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 watchdog/1                                                               
+    9 root      RT   0     0    0    0 S  0.0  0.0   0:01.50 migration/2                                                              
+   11 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 watchdog/2                                                               
+   12 root      RT   0     0    0    0 S  0.0  0.0   0:01.90 migration/3                                                              
+   14 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 watchdog/3                                                               
+   15 root      RT   0     0    0    0 S  0.0  0.0   0:00.08 migration/4                                                              
+   16 root      20   0     0    0    0 S  0.0  0.0   4:54.18 ksoftirqd/4                                                              
+   17 root      RT   0     0    0    0 S  0.0  0.0   0:00.00 watchdog/4       
+
+

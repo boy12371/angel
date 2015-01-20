@@ -1,0 +1,30 @@
+TODO
+	+ 调整AppEngineExtension，使其更模块化
+	+ 支持Http等Bean的RouteClient，支持HAP
+		
+2011.09.06
+	* 调整AppEngineRouteManager的实现,增加扩展能力，不仅仅支持RemoteAppBean,
+	* 调整RemoteAppBeanProxy实现，支持本Site内自动转本地化，及内部测试时的支持
+	* 支持灰度发布到package()函数
+	
+2011.08.23
+	* 提供RemoteAppBean级联灰度发布以及AEG对路由的相关支持
+	
+2011.08.21
+	* 修改AppBeanRouteManager针对单个WorkerAppId多个AppBean路由的BUG
+	* 扩充CFG_Site, 修改AEG的路由模式
+	* 删除com.feinno.appengine.route下的无用代码
+	
+2011.08.02
+1.1.0
+	* 新增duplex injector测试功能
+	* 分拆AppEngineServiceComponenent的启动功能，让AppEngineManager能够独立启动
+	
+2011.07.26
+1.0
+	* 新增RemoteAppBean功能调试基本通过
+	* 增加JobAppBean功能
+	
+2011.05.15
+0.8
+	支持AppEngine的基础功能

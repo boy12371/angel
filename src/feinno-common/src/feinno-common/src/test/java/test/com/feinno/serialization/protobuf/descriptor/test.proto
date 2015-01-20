@@ -1,0 +1,38 @@
+package test;
+option java_package = "test.com.feinno.protobuf.descriptor";
+
+enum enumtype {
+  UNKNOWN = 0;
+  BRONZE = 1;
+  SILVER = 2;
+  GLOD = 3;
+}
+
+//this is a comment1
+message scalartype  {
+  required int32 i32 = 1; //this is a comment2
+  required int64 i64 = 2;
+  required double d = 4;
+  required float f = 5;
+  required string s = 6;
+}
+
+message compoundtype  {
+  required scalartype t = 1;
+  required enumtype e = 2;
+
+  //this is a comment3
+  repeated string r = 3;
+
+  message embedtype {
+    optional int32 key = 1;
+    optional string value = 2;
+    repeated scalartype ext = 3;
+  }
+
+  repeated embedtype emb = 8;
+}
+
+service testService {
+  rpc test1 (scalartype) returns (compoundtype);
+}

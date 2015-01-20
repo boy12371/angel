@@ -1,0 +1,18 @@
+#! /bin/sh
+#e.g. ./run -ha:8890 -workername:test
+LIB=./lib
+APPBEANS=./beans
+CP=.
+
+for j in `ls $LIB/*.jar`; do
+ CP="$CP:$j"
+done
+
+for k in `ls $APPBEANS/*.jar`; do
+ CP="$CP:$k"
+done
+
+JAVA=$JAVA_HOME/bin/java
+APP_JAR=feinno-ha.jar
+MAIN=com.feinno.ha.Genesis
+exec $JAVA -classpath $CP:./$APP_JAR $MAIN "$@"
